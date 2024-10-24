@@ -1,21 +1,41 @@
 import React from "react";
 import NextHead from "next/head";
-
+import ReactHtmlParser, { HTMLReactParserOptions } from 'html-react-parser';
 import { siteConfig } from "@/config/site";
 import { GRAPH_STYLE_API } from "@/lib/query/style";
 
-export const Head = ({ style, }: { style: any, }) => {
+export const Head = ({ style, seoContent }: { style: any, seoContent?: any }) => {
+
+  const options: HTMLReactParserOptions = {
+    replace({ type, parent, name }: any) {
+      if (type === "tag" && name === "title") {
+        return <></>;
+      }
+      if (parent?.name === "title") {
+        return <></>
+      }
+    },
+  };
+
+  // const doc1 = parser.parseFromString(seoContent?.fullHead, "text/html");
   return (
     <NextHead>
-      <title>{siteConfig.name}</title>
-      <meta key="title" content={siteConfig.name} property="og:title" />
+      {/* <title>{siteConfig.name}</title> */}
+      {/* <Title */}
+      {/* <meta key="title" content={siteConfig.name} property="og:title" />
       <meta content={siteConfig.description} property="og:description" />
-      <meta content={siteConfig.description} name="description" />
-      <meta
+      <meta content={siteConfig.description} name="description" /> */}
+      {/* {seoContent?.title ? <title>{seoContent?.title}</title> : <title>Sample</title>} */}
+
+
+      {/* <meta
         key="viewport"
         content="viewport-fit=cover, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
         name="viewport"
-      />
+      /> */}
+      {seoContent?.title ? <title>{seoContent?.title}</title> : ""}
+      {seoContent?.fullHead ? ReactHtmlParser(seoContent?.fullHead, options) : ''}
+
       <link href="/favicon.ico" rel="icon" />
       {style?.length > 0 && style?.map((item: any, index: number) => {
         if (item?.src) {
@@ -28,7 +48,6 @@ export const Head = ({ style, }: { style: any, }) => {
           return <style key={index}>{item?.after}</style>
         }
       })}
-
     </NextHead>
   );
 };

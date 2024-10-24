@@ -1,6 +1,6 @@
 import { client } from '../apollo';
 import { gql } from "@apollo/client";
-export class GRAPH_API {
+export class GRAPH_POST_API {
     getPostBySlug = async (slug: any) => {
         const query = gql`
             query GetPostByURI($id: ID!) {
@@ -21,6 +21,10 @@ export class GRAPH_API {
                             src
                         }
                     }
+                    seo {
+                        fullHead
+                        title
+                    }
                 }
             }
       `
@@ -33,7 +37,6 @@ export class GRAPH_API {
         })
         const post = response?.data?.post
         if (post) {
-
             return post
         }
     }

@@ -7,12 +7,12 @@ import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
 import DefaultLayout from "@/layouts/default";
-import { GRAPH_API } from "@/lib/query/post";
+import { GRAPH_POST_API } from "@/lib/query/post";
 import { GRAPH_STYLE_API } from "@/lib/query/style";
 
-export default function IndexPage({ post }: { post: any }) {
+export default function IndexPage({ post, seoContent }: { post: any, seoContent: any }) {
   return (
-    <DefaultLayout styleSheet={post?.enqueuedStylesheets?.nodes}>
+    <DefaultLayout styleSheet={post?.enqueuedStylesheets?.nodes} seoContent={seoContent}>
 
       {/* <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
         <div className="inline-block max-w-xl text-center justify-center">
@@ -74,15 +74,15 @@ export async function getStaticProps() {
   //  the params argument for this function corresponds to the dynamic URL segments
   //  we included in our page-based route. So, in this case, the `params` object will have
   //  a property named `uri` that contains that route segment when a user hits the page
-  const api = new GRAPH_API()
+  const api = new GRAPH_POST_API()
   const response = await api.getPostBySlug("/")
   const post = response
-
 
 
   return {
     props: {
       post,
+      seoContent: post?.seo
     }
   }
 }
