@@ -1,8 +1,7 @@
 import { client } from '../apollo';
 import { gql } from "@apollo/client";
-export class GRAPH_CATE_API {
-    getAllCategory = async () => {
-        const query = gql`
+export const getAllCategory = async () => {
+    const query = gql`
             query GetAllCate {
                 categories {
                     nodes {
@@ -17,18 +16,17 @@ export class GRAPH_CATE_API {
                 
       `
 
-        const response = await client.query({
-            query: query,
-        })
-        const categories = response?.data?.categories?.nodes
-        if (categories) {
-            return categories
-        }
+    const response = await client.query({
+        query: query,
+    })
+    const categories = response?.data?.categories?.nodes
+    if (categories) {
+        return categories
     }
-    getCateBySlug = async (slug: any) => {
-        console.log(slug, '2222222222222222222222222222')
-        const query = gql`
-            query ($id: ID!) {
+}
+export const getCateBySlug = async (slug: any) => {
+    const query = gql`
+            query GetCateBySlug($id: ID!) {
                 category (id: $id, idType: URI){
                     categoryId
                     name
@@ -48,15 +46,14 @@ export class GRAPH_CATE_API {
             }
       `
 
-        const response = await client.query({
-            query: query,
-            variables: {
-                id: slug
-            }
-        })
-        const category = response?.data?.category
-        if (category) {
-            return category
+    const response = await client.query({
+        query: query,
+        variables: {
+            id: slug
         }
+    })
+    const category = response?.data?.category
+    if (category) {
+        return category
     }
 }

@@ -5,6 +5,8 @@ import { Head } from "./head";
 import { GRAPH_STYLE_API } from "@/lib/query/style";
 import { Navbar } from "@nextui-org/navbar";
 import ReponsiveNavbar from "./Navbar";
+import { useEffect, useState } from "react";
+import { getAllCategory } from "@/lib/query/category";
 
 export default function DefaultLayout({
   children,
@@ -14,11 +16,33 @@ export default function DefaultLayout({
     styleSheet?: any;
     seoContent?: any
   }) {
+  const [menuItems, setMenuItems] = useState([]);
+  const getCate = async () => {
+    const response = await getAllCategory(); // Your API call
+    console.log(response)
+    // if (!response.ok) throw new Error('Network response was not ok');
+    return response
+  };
+
+  const handleGetDataMenu = async () => {
+    try {
+      const response = await getCate();
+      setMenuItems(response);
+    } catch (error) {
+      console.error('Failed to fetch menu items:', error);
+    }
+  };
+  useEffect(() => {
+    handleGetDataMenu();
+  }, []);
+
+
   return (
+
     <div className="relative flex flex-col h-full bg-white">
       <Head style={styleSheet} seoContent={seoContent} />
-      <ReponsiveNavbar />
-      <main className="text-black text-justify">
+      <ReponsiveNavbar menuItems={menuItems} />
+      <main className="text-black text-justify p-20">
         {children}
       </main>
       {/* <footer className="w-full flex items-center justify-center py-3">

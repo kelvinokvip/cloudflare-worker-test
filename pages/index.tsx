@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
 import DefaultLayout from "@/layouts/default";
-import { GRAPH_POST_API } from "@/lib/query/post";
+import { getPostBySlug} from "@/lib/query/post";
 import { GRAPH_STYLE_API } from "@/lib/query/style";
 
 export default function IndexPage({ post, seoContent }: { post: any, seoContent: any }) {
@@ -68,17 +68,8 @@ export default function IndexPage({ post, seoContent }: { post: any, seoContent:
 
 
 export async function getStaticProps() {
-  // const response = await getPostByUri(params.uri)
-  // const post = response?.data?.post
-
-  //  the params argument for this function corresponds to the dynamic URL segments
-  //  we included in our page-based route. So, in this case, the `params` object will have
-  //  a property named `uri` that contains that route segment when a user hits the page
-  const api = new GRAPH_POST_API()
-  const response = await api.getPostBySlug("/")
+  const response = await getPostBySlug("/")
   const post = response
-
-
   return {
     props: {
       post,

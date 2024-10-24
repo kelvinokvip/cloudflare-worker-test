@@ -1,23 +1,18 @@
 //@ts-nocheck
 import React, { useEffect, useState } from "react";
-import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
-import { GRAPH_CATE_API } from "@/lib/query/category";
+import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Button } from "@nextui-org/react";
+import { getAllCategory, GRAPH_CATE_API } from "@/lib/query/category";
 // import { AcmeLogo } from "./AcmeLogo.jsx";
+import { usePathname } from 'next/navigation'
 
-export default function ReponsiveNavbar() {
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+
+export default function ReponsiveNavbar({ menuItems }) {
+    const router = useRouter()
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-    const [menuItems, setMenuItems] = useState([])
-
-
-    const handleGetDataMenu = async () => {
-        const stand = new GRAPH_CATE_API()
-        const response = await stand.getAllCategory()
-        setMenuItems(response)
-    }
-
-    useEffect(() => {
-        handleGetDataMenu()
-    }, [])
+    const [activeItem, setActiveItem] = useState()
+   
     return (
         <Navbar
             isBordered
@@ -36,36 +31,30 @@ export default function ReponsiveNavbar() {
 
             <NavbarContent className="hidden sm:!flex sm:!visible gap-4" justify="center">
                 <NavbarItem>
-                    <Link color="foreground" href={'/'}>
+                    <Link href={'/'} className="text-white">
                         HOME
                     </Link>
                 </NavbarItem>
-                {menuItems.map((item, index) => {
+                {(menuItems)?.map((item, index) => {
+                    
                     if (!item?.description) {
                         return
                     }
                     return <NavbarItem>
-                        <Link color="foreground" href={item?.slug}>
+                        <div className={router.asPath?.replace("/","") === item.slug ? "text-blue-400 hover:cursor-pointer" : "text-white hover:cursor-pointer"} onClick={() => {
+                            router.push(item?.slug)
+                        }}>
                             {item?.name}
-                        </Link>
+                        </div>
                     </NavbarItem>
                 })}
 
             </NavbarContent>
 
-            {/* <NavbarContent justify="end">
-                <NavbarItem className="hidden lg:flex">
-                    <Link href="#">Login</Link>
-                </NavbarItem>
-                <NavbarItem>
-                    <Button as={Link} color="warning" href="#" variant="flat">
-                        Sign Up
-                    </Button>
-                </NavbarItem>
-            </NavbarContent> */}
+
 
             <NavbarMenu>
-                {menuItems.map((item, index) => {
+                {(menuItems)?.map((item, index) => {
                     if (!item?.description) {
                         return
                     }
