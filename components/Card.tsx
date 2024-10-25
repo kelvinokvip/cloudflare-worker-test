@@ -2,13 +2,12 @@ import { Card, CardHeader } from "@nextui-org/react"
 import { Image } from "@nextui-org/image";
 import { useRouter } from "next/router";
 
-export const CustomCard = ({ title, image, slug }: any) => {
+export const CustomCard = ({ title, image }: any) => {
     const router = useRouter()
 
     const handleClick = (e: any, slug: any) => {
         console.log(slug)
 
-        // router.push(slug)
     }
     return <Card className="col-span-12 sm:col-span-4 h-[300px] hover:cursor">
         <CardHeader className="absolute z-10 top-1 flex-col !items-start" >

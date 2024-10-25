@@ -34,7 +34,7 @@ export const Head = ({ style, seoContent }: { style: any, seoContent?: any }) =>
         name="viewport"
       /> */}
       {seoContent?.title ? <title>{seoContent?.title}</title> : ""}
-      {seoContent?.fullHead ? ReactHtmlParser(seoContent?.fullHead, options) : ''}
+      {seoContent?.fullHead ? ReactHtmlParser(seoContent?.fullHead?.replaceAll(process.env.NEXT_PUBLIC_WORDPRESS_API_URL, process.env.NEXT_PUBLIC_URL), options) : ''}
 
       <link href="/favicon.ico" rel="icon" />
       {style?.length > 0 && style?.map((item: any, index: number) => {
