@@ -9,7 +9,6 @@ import { GithubIcon } from "@/components/icons";
 import DefaultLayout from "@/layouts/default";
 import { getPostBySlug } from "@/lib/query/post";
 import { GRAPH_STYLE_API } from "@/lib/query/style";
-
 export default function IndexPage({ post, seoContent }: { post: any, seoContent: any }) {
   return (
     <DefaultLayout styleSheet={post?.enqueuedStylesheets?.nodes} seoContent={seoContent}>
@@ -59,7 +58,7 @@ export default function IndexPage({ post, seoContent }: { post: any, seoContent:
         </div>
       </section> */}
 
-      <article dangerouslySetInnerHTML={{ __html: post.content?.replaceAll(process.env.NEXT_PUBLIC_WORDPRESS_API_URL, process.env.NEXT_PUBLIC_URL) }}>
+      <article dangerouslySetInnerHTML={{ __html: post.content }}>
       </article>
     </DefaultLayout>
   );

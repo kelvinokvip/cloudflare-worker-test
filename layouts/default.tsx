@@ -39,7 +39,7 @@ export default function DefaultLayout({
 
   return (
 
-    <div className="relative flex flex-col h-full bg-white">
+    <div className="relative flex flex-col h-full bg-white justify-center">
       <Head style={styleSheet} seoContent={seoContent} />
       <ReponsiveNavbar menuItems={menuItems} />
       <main className="text-black text-justify p-20">

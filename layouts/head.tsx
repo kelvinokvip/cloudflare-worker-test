@@ -3,7 +3,6 @@ import NextHead from "next/head";
 import ReactHtmlParser, { HTMLReactParserOptions } from 'html-react-parser';
 import { siteConfig } from "@/config/site";
 import { GRAPH_STYLE_API } from "@/lib/query/style";
-
 export const Head = ({ style, seoContent }: { style: any, seoContent?: any }) => {
 
   const options: HTMLReactParserOptions = {
@@ -33,6 +32,8 @@ export const Head = ({ style, seoContent }: { style: any, seoContent?: any }) =>
         content="viewport-fit=cover, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
         name="viewport"
       /> */}
+       
+       
       {seoContent?.title ? <title>{seoContent?.title}</title> : ""}
       {seoContent?.fullHead ? ReactHtmlParser(seoContent?.fullHead?.replaceAll(process.env.NEXT_PUBLIC_WORDPRESS_API_URL, process.env.NEXT_PUBLIC_URL), options) : ''}
 

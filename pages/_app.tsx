@@ -6,9 +6,10 @@ import { useRouter } from "next/router";
 
 import { fontSans, fontMono } from "@/config/fonts";
 import "@/styles/globals.css";
+import "@/styles/custom.css";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "../lib/apollo";
-
+// import "@/styles/custom.css"
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
