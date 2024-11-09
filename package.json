@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build && cp _redirects output/_redirects",
+		"build": "next build && cp _redirects out/_redirects",
 		"start": "next start",
 		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
 		"pages:build": "npx @cloudflare/next-on-pages",
